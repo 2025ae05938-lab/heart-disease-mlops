@@ -1,0 +1,40 @@
+# Step 7: Kubernetes Deployment - runs 2 copies (replicas) of the API container
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heart-api                  # name of this deployment
+spec:
+  replicas: 2                      # run two identical pods for availability
+  selector:
+    matchLabels:
+      app: heart-api               # manage pods that carry this label
+  template:
+    metadata:
+      labels:
+        app: heart-api             # label given to every pod
+    spec:
+      containers:
+        - name: heart-api
+          image: heart-api:latest  # the image you built with docker build -t heart-api .
+          imagePullPolicy: Never   # use the local image, do not pull from the internet
+          ports:
+            - containerPort: 8000  # port the app listens on inside the container
+          readinessProbe:          # pod gets traffic only once /health responds
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:           # Kubernetes restarts the pod if this fails
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources:
+            requests:              # minimum resources reserved
+              cpu: "100m"
+              memory: "128Mi"
+            limits:                # maximum resources allowed
+              cpu: "500m"
+              memory: "512Mi"

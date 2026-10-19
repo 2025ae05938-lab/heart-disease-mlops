@@ -1,0 +1,12 @@
+# Step 7: Kubernetes Service - gives the pods one stable address
+apiVersion: v1
+kind: Service
+metadata:
+  name: heart-api-service
+spec:
+  type: LoadBalancer        # on Docker Desktop this is reachable at localhost
+  selector:
+    app: heart-api          # send traffic to pods with this label
+  ports:
+    - port: 80              # port you call from outside (http://localhost)
+      targetPort: 8000      # port inside the container
