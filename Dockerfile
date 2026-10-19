@@ -1,6 +1,6 @@
 # Step 6: Container image for the prediction API
 # Small official Python image (slim = fewer unneeded packages)
-FROM python:3.10-slim
+FROM python:3.13-slim
 
 # All following commands run inside /app in the container
 WORKDIR /app
