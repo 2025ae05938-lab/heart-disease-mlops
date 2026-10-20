@@ -1,4 +1,5 @@
 # Heart Disease Risk Prediction - MLOps Assignment 1
+Repository: https://github.com/2025ae05938-lab/heart-disease-mlops
 
 End-to-end ML project: data -> EDA -> models -> MLflow -> tests/CI -> FastAPI -> Docker -> Kubernetes -> monitoring.
 
